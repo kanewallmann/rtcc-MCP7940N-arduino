@@ -238,18 +238,18 @@ void RTCC_MCP7940N::SetBatteryEnabled(bool enabled)
 	this->SetBits(3, B00001000, enabled << 3);
 }
 
-void RTCC_MCP7940N::Set24HourTime(bool enabled)
+void RTCC_MCP7940N::Set24HourTimeEnabled(bool enabled)
 {
 	this->SetBits(2, B10000000, (!enabled) << 7);
 }
 
-void RTCC_MCP7940N::SetSquareWaveOutputState(bool enabled, int frequency)
+void RTCC_MCP7940N::SetSquareWaveOutputState(bool enabled, RtccSquareWaveFrequency frequency)
 {
 	this->SetBits(0x07, B1000000, enabled << 6);
 
 	if( enabled )
 	{
-		this->SetBits(0x07, B11, frequency & B11);
+		this->SetBits(0x07, B11, (byte)frequency & B11);
 	}
 }
 
@@ -382,24 +382,24 @@ void RTCC_MCP7940N::ClearAlarm2Flag()
 	this->SetBits(0x14, B1000, 0);
 }
 
-void RTCC_MCP7940N::SetAlarm1Mask(byte mask)
+void RTCC_MCP7940N::SetAlarm1Mask(RtccAlarmMask mask)
 {
-	this->SetBits(0x0D, B1110000, mask << 4);
+	this->SetBits(0x0D, B1110000, (byte)mask << 4);
 }
 
-byte RTCC_MCP7940N::GetAlarm1Mask()
+RtccAlarmMask RTCC_MCP7940N::GetAlarm1Mask()
 {
-	return (this->GetByte(0x0D) & B1110000) >> 4;
+	return (RtccAlarmMask)((this->GetByte(0x0D) & B1110000) >> 4);
 }
 
-void RTCC_MCP7940N::SetAlarm2Mask(byte mask)
+void RTCC_MCP7940N::SetAlarm2Mask(RtccAlarmMask mask)
 {
-	this->SetBits(0x14, B1110000, mask << 4);
+	this->SetBits(0x14, B1110000, (byte)mask << 4);
 }
 
-byte RTCC_MCP7940N::GetAlarm2Mask()
+RtccAlarmMask RTCC_MCP7940N::GetAlarm2Mask()
 {
-	return (this->GetByte(0x14) & B1110000) >> 4;
+	return (RtccAlarmMask)((this->GetByte(0x14) & B1110000) >> 4);
 }
 
 void RTCC_MCP7940N::ConvertTime(const tm *from, rtcc_time *to)
@@ -485,7 +485,7 @@ void RTCC_MCP7940N::ConvertTime(const rtcc_time *from, tm *to)
 	to->tm_year = ((from->yrten * 10) + from->yrten) + 100;
 }
 
-bool RTCC_MCP7940N::Get24HourTime()
+bool RTCC_MCP7940N::Get24HourTimeEnabled()
 {
 	return this->GetFlag(0x02, B1000000);
 }
