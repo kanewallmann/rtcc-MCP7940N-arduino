@@ -16,8 +16,8 @@ void setup()
 	Wire.begin();
 
 	// Use crystal for timekeeping
-	rtc.SetOscillatorEnabled(true);
-	rtc.SetExternalOscillatorEnabled(false);
+	rtc.setOscillatorEnabled(true);
+	rtc.setExternalOscillatorEnabled(false);
 }
 
 void loop()
@@ -26,11 +26,11 @@ void loop()
 
 	// Read time in internal format
 	rtcc_time time;
-	rtc.ReadTime(&time);
+	rtc.getTime(&time);
 
 	// Covner to tm format
 	tm tm_time;
-	rtc.ConverTime( &time, &tm_time );
+	rtc.convertTime( &time, &tm_time );
 
 	// Format time and output to string
 	strftime( buff, 20, "%d-%m-%y %H:%M:%s", &tm_time );

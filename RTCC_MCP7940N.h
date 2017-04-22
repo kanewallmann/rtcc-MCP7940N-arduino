@@ -18,7 +18,7 @@ typedef enum
 	RTCC_SQWFS_8KHZ,
 	RTCC_SQWFS_32KHZ
 }
-RtccSquareWaveFrequency;
+		RtccSquareWaveFrequency;
 
 typedef enum
 {
@@ -31,7 +31,7 @@ typedef enum
 	RTCC_ALARM_MASK_UNUSED2,
 	RTCC_ALARM_MASK_ALL
 }
-RtccAlarmMask;
+		RtccAlarmMask;
 
 typedef struct
 {
@@ -63,7 +63,7 @@ public:
 	 *
 	 * @param time 		Memory location to store the time
 	 */
-	void ReadTime(rtcc_time *time);
+	void getTime(rtcc_time* time);
 
 	/**
 	 * Writes the supplied time to the RTCC chip
@@ -72,42 +72,42 @@ public:
 	 *
 	 * @param time 		Pointer to time to write to chip
 	 */
-	void SetTime(const rtcc_time *time);
+	void setTime(const rtcc_time* time);
 
 	/**
 	 * Global enable of the clock oscillator circuit
 	 *
 	 * @param enabled 	True to enable, false to disable
 	 */
-	void SetOscillatorEnabled(bool enabled);
+	void setOscillatorEnabled(bool enabled);
 
 	/**
 	 * Set alarm 1
 	 *
 	 * @param time 		The time to set alarm 1 to
 	 */
-	void SetAlarm1(const rtcc_time *time);
+	void setAlarm1(const rtcc_time* time);
 
 	/**
 	 * Set alarm 2
 	 *
 	 * @param time 		The time to set alarm 2 to
 	 */
-	void SetAlarm2(const rtcc_time *time);
+	void setAlarm2(const rtcc_time* time);
 
 	/**
 	 * Set the RTCC chip to use 24 time or 12 hour time, in 12 hour time rtcc_time.pm is set to true for pm
 	 *
 	 * @param enabled	True for 24 hour time, false for 12 hour time
 	 */
-	void Set24HourTimeEnabled(bool enabled);
+	void set24HourTimeEnabled(bool enabled);
 
 	/**
 	 * Check what time mode the RTCC chip is in
 	 *
 	 * @return 			True for 24 hour time, false for 12 hour time
 	 */
-	bool Get24HourTimeEnabled();
+	bool get24HourTimeEnabled();
 
 	/**
 	 * Enable the square wave generator, square wave is output on MFP pin
@@ -117,14 +117,14 @@ public:
 	 * @param enabled 		True to enable generator
 	 * @param frequency 	Square wave frequency
 	 */
-	void SetSquareWaveOutputState(bool enabled, RtccSquareWaveFrequency frequency = RTCC_SQWFS_1HZ );
+	void setSquareWaveOutputState(bool enabled, RtccSquareWaveFrequency frequency = RTCC_SQWFS_1HZ);
 
 	/**
 	 * Check state of square wave generator
 	 *
 	 * @return 				True of generator is enabled
 	 */
-	bool GetSquareWaveOutputEnabled();
+	bool getSquareWaveOutputEnabled();
 
 	/**
 	 * Get the state of the oscillator
@@ -133,7 +133,7 @@ public:
 	 *
 	 * @return 				Returns true of the oscillator is running correctly
 	 */
-	bool IsOscillatorRunning();
+	bool isOscillatorRunning();
 
 	/**
 	 * Check the power failure flag
@@ -143,61 +143,61 @@ public:
 	 *
 	 * @return 				True if a power fail event has been detected
 	 */
-	bool HasPowerFailed();
+	bool hasPowerFailed();
 
 	/**
 	 * Clear the power failure flag so it can be raised again if another failure is detected
 	 */
-	void ClearPowerFailedFlag();
+	void clearPowerFailedFlag();
 
 	/**
 	 * Enable or disable the low power battery-backed mode
 	 *
 	 * @param enabled 		True to enable
 	 */
-	void SetBatteryEnabled(bool enabled);
+	void setBatteryEnabled(bool enabled);
 
 	/**
 	 * Check if the battery-backed mode is enabled
 	 *
 	 * @return 				True if enabled
 	 */
-	bool GetBatteryEnabled();
+	bool getBatteryEnabled();
 
 	/**
 	 * Returns whether the current time stored on the RTCC chip is a leap year
 	 *
 	 * @return 				True for leap year
 	 */
-	bool IsLeapYear();
+	bool isLeapYear();
 
 	/**
 	 * Enable or disable alarm 1
 	 *
 	 * @param enabled 		True to enable
 	 */
-	void SetAlarm1Enabled(bool enabled);
+	void setAlarm1Enabled(bool enabled);
 
 	/**
 	 * Returns enabled state of alarm 1
 	 *
 	 * @return 				True for enabled
 	 */
-	bool GetAlarm1Enabled();
+	bool getAlarm1Enabled();
 
 	/**
 	 * Set the polarity on the alarm output on MFP
 	 *
 	 * @param high 			True results in a HIGH when the alarm is active, false for LOW
 	 */
-	void SetAlarmPolarity(bool high);
+	void setAlarmPolarity(bool high);
 
 	/**
 	 * Get the alarm polarity
 	 *
 	 * @return 				True for HIGH, false for LOW
 	 */
-	bool GetAlarmPolarity();
+	bool getAlarmPolarity();
 
 	/**
 	 * Get state of alarm 1 interrupt flag
@@ -206,40 +206,40 @@ public:
 	 *
 	 * @return 				True for asserted
 	 */
-	bool GetAlarm1Flag();
+	bool getAlarm1Flag();
 
 	/**
 	 * Clear the alarm 1 interrupt flag
 	 */
-	void ClearAlarm1Flag();
+	void clearAlarm1Flag();
 
 	/**
 	 * Set the alarm 1 condition flag
 	 *
 	 * @param mask 		The mask to use for alarm 1
 	 */
-	void SetAlarm1Mask(RtccAlarmMask mask);
+	void setAlarm1Mask(RtccAlarmMask mask);
 
 	/**
 	 * Get the alarm 1 condition flag
 	 *
 	 * @return 			The currently set alarm 1 mask
 	 */
-	RtccAlarmMask GetAlarm1Mask();
+	RtccAlarmMask getAlarm1Mask();
 
 	/**
 	 * Enable or disable alarm 2
 	 *
 	 * @param enabled 		True to enable
 	 */
-	void SetAlarm2Enabled(bool enabled);
+	void setAlarm2Enabled(bool enabled);
 
 	/**
 	 * Get the enabled state of alarm 2
 	 *
 	 * @return 				True for enabled
 	 */
-	bool GetAlarm2Enabled();
+	bool getAlarm2Enabled();
 
 	/**
 	 * Get state of alarm 2 interrupt flag
@@ -248,61 +248,61 @@ public:
 	 *
 	 * @return 				True for asserted
 	 */
-	bool GetAlarm2Flag();
+	bool getAlarm2Flag();
 
 	/**
 	 * Clear the alarm 2 interrupt flag
 	 */
-	void ClearAlarm2Flag();
+	void clearAlarm2Flag();
 
 	/**
 	 * Get the alarm 1 condition flag
 	 *
 	 * @return 			The mask to use for alarm 1
 	 */
-	void SetAlarm2Mask(RtccAlarmMask mask);
+	void setAlarm2Mask(RtccAlarmMask mask);
 
 	/**
 	 * Get the alarm 2 condition flag
 	 *
 	 * @return 			The currently set alarm 2 mask
 	 */
-	RtccAlarmMask GetAlarm2Mask();
+	RtccAlarmMask getAlarm2Mask();
 
 	/**
 	 * Set the state of the external oscillator
 	 *
 	 * @param enabled 		True to use external clock on X1, false for crystal across X1-X2
 	 */
-	void SetExternalOscillatorEnabled(bool enabled);
+	void setExternalOscillatorEnabled(bool enabled);
 
 	/**
 	 * Get the state of the external oscillator
 	 *
 	 * @return 				True means using external clock, false for crystal
 	 */
-	bool GetExternalOscillatorEnabled();
+	bool getExternalOscillatorEnabled();
 
 	/**
 	 * Enable or disable course trim mode
 	 *
 	 * @param enabled 		True for course trim enabled
 	 */
-	void SetCourseTrimEnabled(bool enabled);
+	void setCourseTrimEnabled(bool enabled);
 
 	/**
 	 * Get course trim enabled state
 	 *
 	 * @return 				True for course trim enabled
 	 */
-	bool GetCourseTrimEnabled();
+	bool getCourseTrimEnabled();
 
 	/**
 	 * Get current general purpose output state
 	 *
 	 * @return 				True for HIGH, false for LOW
 	 */
-	bool GetGPOState();
+	bool getGPOState();
 
 	/**
 	 * Set general purpose output state
@@ -311,14 +311,14 @@ public:
 	 *
 	 * @param state 		True for HIGH, false for LOW
 	 */
-	void SetGPOState(bool state);
+	void setGPOState(bool state);
 
 	/**
 	 * Get the current oscillator trim value
 	 *
 	 * @return 				The value of the oscillator trim
 	 */
-	signed char GetTrimValue();
+	signed char getTrimValue();
 
 	/**
 	 * Set the oscillator trim value
@@ -327,7 +327,21 @@ public:
 	 *
 	 * @param value 		The oscillator trim value
 	 */
-	void SetTrimValue(signed char value);
+	void setTrimValue(signed char value);
+
+	/**
+	 * Get the value currently stored in the power down date/time registers
+	 *
+	 * @param time 			The memory location to store the date/time
+	 */
+	void getPowerDownTime(rtcc_time* time);
+
+	/**
+	 * Get the value currently stored in the power up date/time register
+	 *
+	 * @param time 			The memory location to store the date/time
+	 */
+	void getPowerUpTime(rtcc_time* time);
 
 	/**
 	 * Convert time between different formats
@@ -335,7 +349,7 @@ public:
 	 * @param from 		A tm struct from time.h to convert from
 	 * @param to 		An rtcc_time struct to convert to
 	 */
-	static void ConvertTime(const tm *from, rtcc_time *to);
+	static void convertTime(const tm* from, rtcc_time* to);
 
 	/**
 	 * Convert time between different formats
@@ -343,17 +357,19 @@ public:
 	 * @param from 		An rtcc_time struct to convert from
 	 * @param to 		A tm struct from time.h to convert to
 	 */
-	static void ConvertTime(const rtcc_time *from, tm *to);
+	static void convertTime(const rtcc_time* from, tm* to);
 
 private:
 
-	void SetBits(int address, int mask, int values);
+	void setBits(int address, int mask, int values);
 
-	byte GetByte(int address);
+	byte getByte(int address);
 
-	bool GetFlag(int address, int mask);
+	bool getFlag(int address, int mask);
 
-	void SetAlarm(int address, const rtcc_time *timestamp);
+	void setAlarm(int address, const rtcc_time* timestamp);
+
+	void getPowerFailTime(int address, rtcc_time* time);
 
 	int i2c_addr;
 };

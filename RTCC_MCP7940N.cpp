@@ -9,7 +9,7 @@ RTCC_MCP7940N::RTCC_MCP7940N()
 	this->i2c_addr = RTCC_MCP7940_I2C_ADDR;
 }
 
-void RTCC_MCP7940N::ReadTime(rtcc_time *time)
+void RTCC_MCP7940N::getTime(rtcc_time* time)
 {
 	// Set read address to 0
 	Wire.beginTransmission(this->i2c_addr);
@@ -37,7 +37,7 @@ void RTCC_MCP7940N::ReadTime(rtcc_time *time)
 	time->yrone = time_data[6] & B1111;
 }
 
-void RTCC_MCP7940N::SetBits(int address, int mask, int values)
+void RTCC_MCP7940N::setBits(int address, int mask, int values)
 {
 	// Set read address
 	Wire.beginTransmission(this->i2c_addr);
@@ -60,7 +60,7 @@ void RTCC_MCP7940N::SetBits(int address, int mask, int values)
 	Wire.endTransmission();
 }
 
-byte RTCC_MCP7940N::GetByte(int address)
+byte RTCC_MCP7940N::getByte(int address)
 {
 	// Set read address to 0
 	Wire.beginTransmission(this->i2c_addr);
@@ -71,13 +71,13 @@ byte RTCC_MCP7940N::GetByte(int address)
 	return Wire.read();
 }
 
-bool RTCC_MCP7940N::GetFlag(int address, int mask)
+bool RTCC_MCP7940N::getFlag(int address, int mask)
 {
-	byte data = this->GetByte(address);
+	byte data = this->getByte(address);
 	return data & mask;
 }
 
-void RTCC_MCP7940N::SetTime(const rtcc_time *time)
+void RTCC_MCP7940N::setTime(const rtcc_time* time)
 {
 	// Set read address to 0
 	Wire.beginTransmission(this->i2c_addr);
@@ -91,11 +91,11 @@ void RTCC_MCP7940N::SetTime(const rtcc_time *time)
 	Wire.readBytes(time_data, 7);
 
 	// Clear ST and EXTOSC during write operation, these were read above so will be reset to original values after the write
-	this->SetBits(0x00, B10000000, 0);
-	this->SetBits(0x07, B100, 0);
+	this->setBits(0x00, B10000000, 0);
+	this->setBits(0x07, B100, 0);
 
 	// Wait for OSCRUN to go low
-	while( this->GetByte(0x03) & B100000 )
+	while( this->getByte(0x03) & B100000 )
 	{
 	}
 
@@ -154,109 +154,109 @@ void RTCC_MCP7940N::SetTime(const rtcc_time *time)
 	Wire.endTransmission();
 }
 
-bool RTCC_MCP7940N::GetGPOState()
+bool RTCC_MCP7940N::getGPOState()
 {
-	return this->GetFlag(0x07, B10000000);
+	return this->getFlag(0x07, B10000000);
 }
 
-void RTCC_MCP7940N::SetGPOState(bool state)
+void RTCC_MCP7940N::setGPOState(bool state)
 {
-	this->SetBits(0x07, B10000000, state << 7);
+	this->setBits(0x07, B10000000, state << 7);
 }
 
-void RTCC_MCP7940N::SetExternalOscillatorEnabled(bool enabled)
+void RTCC_MCP7940N::setExternalOscillatorEnabled(bool enabled)
 {
-	this->SetBits(0x07, B1000, enabled << 3);
+	this->setBits(0x07, B1000, enabled << 3);
 }
 
-bool RTCC_MCP7940N::GetExternalOscillatorEnabled()
+bool RTCC_MCP7940N::getExternalOscillatorEnabled()
 {
-	return this->GetFlag(0x07, B1000);
+	return this->getFlag(0x07, B1000);
 }
 
-bool RTCC_MCP7940N::GetAlarm1Enabled()
+bool RTCC_MCP7940N::getAlarm1Enabled()
 {
-	return this->GetFlag(0x07, B10000);
+	return this->getFlag(0x07, B10000);
 }
 
-bool RTCC_MCP7940N::GetAlarm2Enabled()
+bool RTCC_MCP7940N::getAlarm2Enabled()
 {
-	return this->GetFlag(0x07, B100000);
+	return this->getFlag(0x07, B100000);
 }
 
-void RTCC_MCP7940N::SetCourseTrimEnabled(bool enabled)
+void RTCC_MCP7940N::setCourseTrimEnabled(bool enabled)
 {
-	this->SetBits(0x07, B100, enabled << 2);
+	this->setBits(0x07, B100, enabled << 2);
 }
 
-bool RTCC_MCP7940N::GetCourseTrimEnabled()
+bool RTCC_MCP7940N::getCourseTrimEnabled()
 {
-	return this->GetFlag(0x08, B100);
+	return this->getFlag(0x08, B100);
 }
 
-void RTCC_MCP7940N::SetAlarm1Enabled(bool enabled)
+void RTCC_MCP7940N::setAlarm1Enabled(bool enabled)
 {
-	this->SetBits(0x07, B10000, enabled << 4);
+	this->setBits(0x07, B10000, enabled << 4);
 }
 
-void RTCC_MCP7940N::SetAlarm2Enabled(bool enabled)
+void RTCC_MCP7940N::setAlarm2Enabled(bool enabled)
 {
-	this->SetBits(0x07, B100000, enabled << 5);
+	this->setBits(0x07, B100000, enabled << 5);
 }
 
-bool RTCC_MCP7940N::IsOscillatorRunning()
+bool RTCC_MCP7940N::isOscillatorRunning()
 {
-	return this->GetFlag(0x03, B100000);
+	return this->getFlag(0x03, B100000);
 }
 
-bool RTCC_MCP7940N::HasPowerFailed()
+bool RTCC_MCP7940N::hasPowerFailed()
 {
-	return this->GetFlag(0x03, B10000);
+	return this->getFlag(0x03, B10000);
 }
 
-bool RTCC_MCP7940N::GetBatteryEnabled()
+bool RTCC_MCP7940N::getBatteryEnabled()
 {
-	return this->GetFlag(0x03, B1000);
+	return this->getFlag(0x03, B1000);
 }
 
-bool RTCC_MCP7940N::IsLeapYear()
+bool RTCC_MCP7940N::isLeapYear()
 {
-	return this->GetFlag(0x05, B100000);
+	return this->getFlag(0x05, B100000);
 }
 
-void RTCC_MCP7940N::ClearPowerFailedFlag()
+void RTCC_MCP7940N::clearPowerFailedFlag()
 {
-	this->SetBits(3, B00010000, 0);
+	this->setBits(0x03, B00010000, 0);
 }
 
-void RTCC_MCP7940N::SetOscillatorEnabled(bool enabled)
+void RTCC_MCP7940N::setOscillatorEnabled(bool enabled)
 {
-	this->SetBits(0, B10000000, enabled << 7);
+	this->setBits(0x00, B10000000, enabled << 7);
 }
 
-void RTCC_MCP7940N::SetBatteryEnabled(bool enabled)
+void RTCC_MCP7940N::setBatteryEnabled(bool enabled)
 {
-	this->SetBits(3, B00001000, enabled << 3);
+	this->setBits(0x03, B00001000, enabled << 3);
 }
 
-void RTCC_MCP7940N::Set24HourTimeEnabled(bool enabled)
+void RTCC_MCP7940N::set24HourTimeEnabled(bool enabled)
 {
-	this->SetBits(2, B10000000, (!enabled) << 7);
+	this->setBits(0x02, B10000000, (!enabled) << 7);
 }
 
-void RTCC_MCP7940N::SetSquareWaveOutputState(bool enabled, RtccSquareWaveFrequency frequency)
+void RTCC_MCP7940N::setSquareWaveOutputState(bool enabled, RtccSquareWaveFrequency frequency)
 {
-	this->SetBits(0x07, B1000000, enabled << 6);
+	this->setBits(0x07, B1000000, enabled << 6);
 
 	if( enabled )
 	{
-		this->SetBits(0x07, B11, (byte)frequency & B11);
+		this->setBits(0x07, B11, (byte) frequency & B11);
 	}
 }
 
-signed char RTCC_MCP7940N::GetTrimValue()
+signed char RTCC_MCP7940N::getTrimValue()
 {
-	signed char val = this->GetByte(0x08);
+	signed char val = this->getByte(0x08);
 	val &= B01111111;
 
 	if( !(val & B1000000))
@@ -266,31 +266,31 @@ signed char RTCC_MCP7940N::GetTrimValue()
 	return val;
 }
 
-void RTCC_MCP7940N::SetTrimValue(signed char value)
+void RTCC_MCP7940N::setTrimValue(signed char value)
 {
-	this->SetBits(0x08, B1111111, value);
+	this->setBits(0x08, B1111111, value);
 
 	if( value < 0 )
 	{
-		this->SetBits(0x08, B10000000, 0);
+		this->setBits(0x08, B10000000, 0);
 	}
 	else
 	{
-		this->SetBits(0x08, B10000000, B10000000);
+		this->setBits(0x08, B10000000, B10000000);
 	}
 }
 
-void RTCC_MCP7940N::SetAlarm1(const rtcc_time *time)
+void RTCC_MCP7940N::setAlarm1(const rtcc_time* time)
 {
-	this->SetAlarm(0x0A, time);
+	this->setAlarm(0x0A, time);
 }
 
-void RTCC_MCP7940N::SetAlarm2(const rtcc_time *time)
+void RTCC_MCP7940N::setAlarm2(const rtcc_time* time)
 {
-	this->SetAlarm(0x11, time);
+	this->setAlarm(0x11, time);
 }
 
-void RTCC_MCP7940N::SetAlarm(int address, const rtcc_time *time)
+void RTCC_MCP7940N::setAlarm(int address, const rtcc_time* time)
 {
 	// Set read address to 0
 	Wire.beginTransmission(this->i2c_addr);
@@ -353,57 +353,57 @@ void RTCC_MCP7940N::SetAlarm(int address, const rtcc_time *time)
 	Wire.endTransmission();
 }
 
-void RTCC_MCP7940N::SetAlarmPolarity(bool high)
+void RTCC_MCP7940N::setAlarmPolarity(bool high)
 {
-	this->SetBits(0x0D, B10000000, high << 7);
+	this->setBits(0x0D, B10000000, high << 7);
 }
 
-bool RTCC_MCP7940N::GetAlarmPolarity()
+bool RTCC_MCP7940N::getAlarmPolarity()
 {
-	return this->GetFlag(0x0D, B10000000);
+	return this->getFlag(0x0D, B10000000);
 }
 
-bool RTCC_MCP7940N::GetAlarm1Flag()
+bool RTCC_MCP7940N::getAlarm1Flag()
 {
-	return this->GetFlag(0x0D, B1000);
+	return this->getFlag(0x0D, B1000);
 }
 
-bool RTCC_MCP7940N::GetAlarm2Flag()
+bool RTCC_MCP7940N::getAlarm2Flag()
 {
-	return this->GetFlag(0x14, B1000);
+	return this->getFlag(0x14, B1000);
 }
 
-void RTCC_MCP7940N::ClearAlarm1Flag()
+void RTCC_MCP7940N::clearAlarm1Flag()
 {
-	this->SetBits(0x0D, B1000, 0);
+	this->setBits(0x0D, B1000, 0);
 }
 
-void RTCC_MCP7940N::ClearAlarm2Flag()
+void RTCC_MCP7940N::clearAlarm2Flag()
 {
-	this->SetBits(0x14, B1000, 0);
+	this->setBits(0x14, B1000, 0);
 }
 
-void RTCC_MCP7940N::SetAlarm1Mask(RtccAlarmMask mask)
+void RTCC_MCP7940N::setAlarm1Mask(RtccAlarmMask mask)
 {
-	this->SetBits(0x0D, B1110000, (byte)mask << 4);
+	this->setBits(0x0D, B1110000, (byte) mask << 4);
 }
 
-RtccAlarmMask RTCC_MCP7940N::GetAlarm1Mask()
+RtccAlarmMask RTCC_MCP7940N::getAlarm1Mask()
 {
-	return (RtccAlarmMask)((this->GetByte(0x0D) & B1110000) >> 4);
+	return (RtccAlarmMask)((this->getByte(0x0D) & B1110000) >> 4);
 }
 
-void RTCC_MCP7940N::SetAlarm2Mask(RtccAlarmMask mask)
+void RTCC_MCP7940N::setAlarm2Mask(RtccAlarmMask mask)
 {
-	this->SetBits(0x14, B1110000, (byte)mask << 4);
+	this->setBits(0x14, B1110000, (byte) mask << 4);
 }
 
-RtccAlarmMask RTCC_MCP7940N::GetAlarm2Mask()
+RtccAlarmMask RTCC_MCP7940N::getAlarm2Mask()
 {
-	return (RtccAlarmMask)((this->GetByte(0x14) & B1110000) >> 4);
+	return (RtccAlarmMask)((this->getByte(0x14) & B1110000) >> 4);
 }
 
-void RTCC_MCP7940N::ConvertTime(const tm *from, rtcc_time *to)
+void RTCC_MCP7940N::convertTime(const tm* from, rtcc_time* to)
 {
 	// Seconds
 	to->secten = (from->tm_sec / 10);
@@ -454,7 +454,7 @@ void RTCC_MCP7940N::ConvertTime(const tm *from, rtcc_time *to)
 	to->yrone = ((from->tm_year - 100) % 10);
 }
 
-void RTCC_MCP7940N::ConvertTime(const rtcc_time *from, tm *to)
+void RTCC_MCP7940N::convertTime(const rtcc_time* from, tm* to)
 {
 	// Seconds
 	to->tm_sec = (from->secten * 10) + from->secone;
@@ -486,14 +486,52 @@ void RTCC_MCP7940N::ConvertTime(const rtcc_time *from, tm *to)
 	to->tm_year = ((from->yrten * 10) + from->yrten) + 100;
 }
 
-bool RTCC_MCP7940N::Get24HourTimeEnabled()
+bool RTCC_MCP7940N::get24HourTimeEnabled()
 {
-	return this->GetFlag(0x02, B1000000);
+	return this->getFlag(0x02, B1000000);
 }
 
-bool RTCC_MCP7940N::GetSquareWaveOutputEnabled()
+bool RTCC_MCP7940N::getSquareWaveOutputEnabled()
 {
-	return this->GetFlag(0x07, B1000000);
+	return this->getFlag(0x07, B1000000);
+}
+
+void RTCC_MCP7940N::getPowerDownTime(rtcc_time* time)
+{
+	this->getPowerFailTime(0x18, time);
+}
+
+void RTCC_MCP7940N::getPowerUpTime(rtcc_time* time)
+{
+	this->getPowerFailTime(0x1C, time);
+}
+
+void RTCC_MCP7940N::getPowerFailTime(int address, rtcc_time* time)
+{
+	// Set read address to 0
+	Wire.beginTransmission(this->i2c_addr);
+	Wire.write(byte(address));
+	Wire.endTransmission();
+
+	// Request 7 byte Time and Date registers
+	Wire.requestFrom(this->i2c_addr, 4, true);
+
+	byte time_data[4];
+	Wire.readBytes(time_data, 4);
+
+	time->secten = 0;
+	time->secone = 0;
+	time->minten = (time_data[0] & B111000) >> 4;
+	time->minone = time_data[0] & B1111;
+	time->hrten = (time_data[1] & B110000) >> 4;
+	time->hrone = time_data[1] & B1111;
+	time->dateten = (time_data[2] & B110000) >> 4;
+	time->dateone = time_data[2] & B1111;
+	time->wkday = time_data[3] & B11100000 >> 5;
+	time->mthten = (time_data[3] & B10000) >> 4;
+	time->mthone = time_data[3] & B1111;
+	time->yrten = 0;
+	time->yrone = 0;
 }
 
 

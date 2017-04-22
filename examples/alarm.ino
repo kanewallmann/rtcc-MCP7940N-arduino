@@ -37,28 +37,28 @@ void setup()
 	// Convert to rtcc format and set
 	rtcc_time time;
 	time.mode_24 = true;
-	rtc.ConvertTime( &current_time, &time );
-	rtc.SetTime( &time );
+	rtc.convertTime( &current_time, &time );
+	rtc.setTime( &time );
 
 	char buff[40];
 	strftime( buff, 40, "Time set to: %d-%m-%Y %H:%M:%S", &current_time );
 	Serial.println( buff );
 
 	// Must disable square wave for alarm to work
-	rtc.SetSquareWaveOutputState( false );
-	rtc.SetAlarm2Enabled( false );
-	rtc.ClearAlarm2Flag();
-	rtc.SetAlarm1Enabled( false );
-	rtc.ClearAlarm1Flag();
+	rtc.setSquareWaveOutputState( false );
+	rtc.setAlarm2Enabled( false );
+	rtc.clearAlarm2Flag();
+	rtc.setAlarm1Enabled( false );
+	rtc.clearAlarm1Flag();
 
 	// Alarm sends PIN_INT HIGH
-	rtc.SetAlarmPolarity( true );
+	rtc.setAlarmPolarity( true );
 
 	// Set alarm to go off in 5 seconds
 	time.secone += 5;
-	rtc.SetAlarm1Mask( RTCC_ALARM_MASK_ALL );
-	rtc.SetAlarm1( &time );
-	rtc.SetAlarm1Enabled( true );
+	rtc.setAlarm1Mask( RTCC_ALARM_MASK_ALL );
+	rtc.setAlarm1( &time );
+	rtc.setAlarm1Enabled( true );
 
 	// Enable interrupt
 	pinMode( PIN_INT, INPUT_PULLUP );
@@ -70,7 +70,7 @@ void loop()
 	char buff[20];
 
 	rtcc_time time;
-	rtc.ReadTime(&time);
+	rtc.getTime(&time);
 
 	// Print time every second
 	sprintf(buff, "%u%u-%u%u-%u%u %u%u:%u%u:%u%u", time.dateten, time.dateone, time.mthten, time.mthone, time.yrten,
@@ -81,7 +81,7 @@ void loop()
 	if( itr )
 	{
 		Serial.println( "ALARM" );
-		rtc.ClearAlarm1Flag();
+		rtc.clearAlarm1Flag();
 		itr = false;
 	}
 
