@@ -1,6 +1,6 @@
 {
   "name": "RTCC (MCP7940N)",
-  "description": "",
+  "description": "An Arduino library to control a Microchip MCP7940N or compatible Real Time Clock and Calendar.",
   "keywords": "RTC, RTCC, MCP7940N, Time, Real-Time Clock",
   "authors": {
     "name": "Kane Wallmann",
