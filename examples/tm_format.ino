@@ -1,3 +1,7 @@
+/* Part of RTCC (MCP7940N) Arduino library
+ * Copyright (C) 2017 Kane Wallmann
+ * See LICENCE.txt for license (MIT)*/
+
 #include <Wire.h>
 #include <RTCC_MCP7940N.h>
 #include <time.h>
