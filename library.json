@@ -1,0 +1,19 @@
+{
+  "name": "RTCC (MCP7940N)",
+  "description": "",
+  "keywords": "RTC, RTCC, MCP7940N, Time, Real-Time Clock",
+  "authors": {
+    "name": "Kane Wallmann",
+    "email": "kane@wallmann.ws",
+    "url": "https://github.com/kanewallmann"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kanewallmann/rtcc-MCP7940N-arduino.git"
+  },
+  "version": "1.0.0",
+  "licence": "MIT",
+  "examples": [
+    "examples/*.ino"
+  ]
+}
