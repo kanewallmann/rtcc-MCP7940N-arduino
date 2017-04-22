@@ -4,8 +4,9 @@
 
 #include "RTCC_MCP7940N.h"
 
-RTCC_MCP7940N::RTCC_MCP7940N() : i2c_addr( B1101111 )
+RTCC_MCP7940N::RTCC_MCP7940N()
 {
+	this->i2c_addr = RTCC_MCP7940_I2C_ADDR;
 }
 
 void RTCC_MCP7940N::ReadTime(rtcc_time *time)

@@ -9,6 +9,8 @@
 #include <Wire.h>
 #include <time.h>
 
+#define RTCC_MCP7940_I2C_ADDR       (B1101111)
+
 typedef enum
 {
 	RTCC_SQWFS_1HZ,
