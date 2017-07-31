@@ -141,7 +141,7 @@ public:
 	 *
 	 * @return 				True if a power fail event has been detected
 	 */
-	bool HasPowerFailed();
+	bool HasPowerFailed(rtcc_time *dwTime, rtcc_time *upTime);
 
 	/**
 	 * Clear the power failure flag so it can be raised again if another failure is detected

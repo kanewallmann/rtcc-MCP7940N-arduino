@@ -208,9 +208,56 @@ bool RTCC_MCP7940N::IsOscillatorRunning()
 	return this->GetFlag(0x03, B100000);
 }
 
-bool RTCC_MCP7940N::HasPowerFailed()
+bool RTCC_MCP7940N::HasPowerFailed(rtcc_time *dwTime, rtcc_time *upTime)
 {
-	return this->GetFlag(0x03, B10000);
+    byte year;
+    bool pwFail;
+	
+	year = this->GetByte(0x06);
+	pwFail = this->GetFlag(0x03, B10000);
+
+	if (pwFail) {
+
+        // set read address to POWER DOWN Time-Stamp
+        Wire.beginTransmission(this->i2c_addr);
+        Wire.write(0x18);
+        Wire.endTransmission();
+
+        // Request 8 bytes for both Time-stamps
+        Wire.requestFrom(this->i2c_addr, 8, true);
+        byte time_data[8];
+        Wire.readBytes(time_data, 8);
+
+        // convert 
+        dwTime->secten = 0; //(time_data[0] & B1110000) >> 4;
+        dwTime->secone = 0; //time_data[0] & B1111;
+        dwTime->minten = (time_data[0] & B111000) >> 4;
+        dwTime->minone = time_data[0] & B1111;
+        dwTime->hrten = (time_data[1] & B110000) >> 4;
+        dwTime->hrone = time_data[1] & B1111;
+        dwTime->wkday = 0; //time_data[3] & B111; not provided
+        dwTime->dateten = (time_data[2] & B110000) >> 4;
+        dwTime->dateone = time_data[2] & B1111;
+        dwTime->mthten = (time_data[3] & B10000) >> 4;
+        dwTime->mthone = time_data[3] & B1111;
+        dwTime->yrten = (year & B11110000) >> 4;
+        dwTime->yrone = year & B1111;
+        dwTime->secten = 0; //(time_data[0] & B1110000) >> 4;
+        dwTime->secone = 0; //time_data[0] & B1111;
+        dwTime->minten = (time_data[4] & B111000) >> 4;
+        dwTime->minone = time_data[4] & B1111;
+        dwTime->hrten = (time_data[5] & B110000) >> 4;
+        dwTime->hrone = time_data[5] & B1111;
+        dwTime->wkday = 0; //time_data[3] & B111; not provided
+        dwTime->dateten = (time_data[6] & B110000) >> 4;
+        dwTime->dateone = time_data[6] & B1111;
+        dwTime->mthten = (time_data[7] & B10000) >> 4;
+        dwTime->mthone = time_data[7] & B1111;
+        dwTime->yrten = (year & B11110000) >> 4;
+        dwTime->yrone = year & B1111;
+    }
+
+	return pwFail;
 }
 
 bool RTCC_MCP7940N::GetBatteryEnabled()
