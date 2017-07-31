@@ -7,7 +7,7 @@
 
 #define PIN_INT 	(3)
 
-RTCC_MCP7940N rtc();
+RTCC_MCP7940N rtc;
 
 volatile bool itr = false;
 

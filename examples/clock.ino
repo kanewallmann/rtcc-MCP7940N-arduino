@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <RTCC_MCP7940N.h>
 
-RTCC_MCP7940N rtc();
+RTCC_MCP7940N rtc;
 
 void setup()
 {
