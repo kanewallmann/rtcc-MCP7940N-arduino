@@ -6,7 +6,7 @@
 #include <RTCC_MCP7940N.h>
 #include <time.h>
 
-RTCC_MCP7940N rtc();
+RTCC_MCP7940N rtc;
 
 void setup()
 {
@@ -30,7 +30,7 @@ void loop()
 
 	// Covner to tm format
 	tm tm_time;
-	rtc.ConverTime( &time, &tm_time );
+	rtc.ConvertTime( &time, &tm_time );
 
 	// Format time and output to string
 	strftime( buff, 20, "%d-%m-%y %H:%M:%s", &tm_time );
