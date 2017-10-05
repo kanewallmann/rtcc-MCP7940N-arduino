@@ -1,6 +1,8 @@
 RTCC (MCP7940N)
 ===============
 
+![travis](https://travis-ci.org/kanewallmann/rtcc-MCP7940N-arduino.svg?branch=master)
+
 An Arduino library to control a Microchip MCP7940N or compatible Real Time Clock and Calendar.
 
 Datasheet available here: http://ww1.microchip.com/downloads/en/DeviceDoc/20005010F.pdf
