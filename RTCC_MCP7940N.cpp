@@ -242,19 +242,19 @@ bool RTCC_MCP7940N::HasPowerFailed(rtcc_time *dwTime, rtcc_time *upTime)
         dwTime->mthone = time_data[3] & B1111;
         dwTime->yrten = (year & B11110000) >> 4;
         dwTime->yrone = year & B1111;
-        dwTime->secten = 0; //(time_data[0] & B1110000) >> 4;
-        dwTime->secone = 0; //time_data[0] & B1111;
-        dwTime->minten = (time_data[4] & B111000) >> 4;
-        dwTime->minone = time_data[4] & B1111;
-        dwTime->hrten = (time_data[5] & B110000) >> 4;
-        dwTime->hrone = time_data[5] & B1111;
-        dwTime->wkday = 0; //time_data[3] & B111; not provided
-        dwTime->dateten = (time_data[6] & B110000) >> 4;
-        dwTime->dateone = time_data[6] & B1111;
-        dwTime->mthten = (time_data[7] & B10000) >> 4;
-        dwTime->mthone = time_data[7] & B1111;
-        dwTime->yrten = (year & B11110000) >> 4;
-        dwTime->yrone = year & B1111;
+        upTime->secten = 0; //(time_data[0] & B1110000) >> 4;
+        upTime->secone = 0; //time_data[0] & B1111;
+        upTime->minten = (time_data[4] & B111000) >> 4;
+        upTime->minone = time_data[4] & B1111;
+        upTime->hrten = (time_data[5] & B110000) >> 4;
+        upTime->hrone = time_data[5] & B1111;
+        upTime->wkday = 0; //time_data[3] & B111; not provided
+        upTime->dateten = (time_data[6] & B110000) >> 4;
+        upTime->dateone = time_data[6] & B1111;
+        upTime->mthten = (time_data[7] & B10000) >> 4;
+        upTime->mthone = time_data[7] & B1111;
+        upTime->yrten = (year & B11110000) >> 4;
+        upTime->yrone = year & B1111;
     }
 
 	return pwFail;
