@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://github.com/kanewallmann/rtcc-MCP7940N-arduino.git"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "licence": "MIT",
   "examples": [
     "examples/*.ino"
