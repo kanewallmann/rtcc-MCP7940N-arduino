@@ -9,9 +9,9 @@ cache:
         - "~/.platformio"
 
 env:
-    - PLATFORMIO_CI_SRC=examples/alarm.ino
-    - PLATFORMIO_CI_SRC=examples/clock.ino
-    - PLATFORMIO_CI_SRC=examples/tm_format.ino
+    - PLATFORMIO_CI_SRC=examples/alarm/alarm.ino
+    - PLATFORMIO_CI_SRC=examples/clock/clock.ino
+    - PLATFORMIO_CI_SRC=examples/tm_format/tm_format.ino
 
 install:
     - pip install -U platformio
